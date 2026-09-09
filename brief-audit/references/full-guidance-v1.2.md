@@ -1,4 +1,4 @@
-> **Historical reference — not a runtime contract.** The sibling SKILL.md v1.3 is authoritative. Use this file only for background, examples, or migration review.
+> **Historical reference — not a runtime contract.** The sibling SKILL.md v1.4 is authoritative. Use this file only for background, examples, or migration review.
 
 ---
 name: brief-audit
@@ -40,7 +40,7 @@ This skill does NOT maintain its own list of mandatory sections. The canonical l
 
 ### Step 1 — Ingest the Brief
 
-Read the complete document. If it references external files, read those too. If there are multiple versions, read all of them. If auditing post-implementation (Step 9), also read the actual source code / repository state.
+Read the complete document (locate `docs/brief/brief.md`, falling back to `docs/brief.md`, `brief.md`, or `BRIEF.md`). If it references external files, read those too. If there are multiple versions, read all of them. If auditing post-implementation (Step 9), also read the actual source code / repository state.
 
 Before analyzing, check Engram with `mem_search` for prior context on this project, **if the Engram MCP tool is available in this session**. Past sessions may reveal:
 - Bugs that were found during implementation (indicating brief gaps)
@@ -148,11 +148,11 @@ When the user asks to audit finished code against its brief (not just the docume
 1. Walk the Closed Decisions Registry and Data Model sections, and for each one, verify the corresponding code exists and matches.
 2. Walk the Out of Scope list and verify none of those items were accidentally implemented.
 3. Produce a **Drift Table**: `Brief says | Code actually does | Justified deviation? | Action needed`.
-4. If an `IMPLEMENTATION_LOG.md` exists (produced by `brief-implementation`), cross-check its documented deviations against what you find — undocumented deviations are a 🔴 Critical finding regardless of whether the deviation itself was reasonable, because undocumented drift is what makes briefs untrustworthy over time.
+4. If an `IMPLEMENTATION_LOG.md` exists (locate `docs/brief/IMPLEMENTATION_LOG.md` or legacy `./IMPLEMENTATION_LOG.md`, produced by `brief-implementation`), cross-check its documented deviations against what you find — undocumented deviations are a 🔴 Critical finding regardless of whether the deviation itself was reasonable, because undocumented drift is what makes briefs untrustworthy over time.
 
 ### Step 10 — Produce Audit Report
 
-Generate a structured report as an artifact:
+Generate a structured report as an artifact (if written to a file, save to `docs/brief/brief-audit-report.md`):
 
 ```markdown
 # Audit Report — [Brief Name] v[N]

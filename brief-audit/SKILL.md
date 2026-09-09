@@ -4,7 +4,7 @@ description: "Trigger: audit a brief, compare versions, or check finished code a
 license: Apache-2.0
 metadata:
   author: Laumar
-  version: "1.3"
+  version: "1.4"
 ---
 
 # Brief Audit
@@ -16,7 +16,7 @@ Activate for a brief quality review, v1/v2 comparison, pre-implementation gate, 
 ## Hard Rules
 
 - Read `../brief-shared/sections-reference.md` before scoring. For Next.js, read `../brief-shared/references/nextjs.md`.
-- Read the complete brief, referenced files, all versions, and actual source when auditing implementation.
+- Read the complete brief (locate in `docs/brief/brief.md`, fallback to `docs/brief.md`, `brief.md`, `BRIEF.md`), referenced files, all versions, and actual source when auditing implementation.
 - Check section presence **and minimum content**, not headers alone. Use the shared severities; do not invent a section list.
 - Distinguish ordinary weakness, unconfirmed assumption, and Implementability Gap. Three critical implementability gaps cap Technical Accuracy at 6/10.
 - Verify fast-moving APIs against current primary documentation when approving snippets; state what was verified.
@@ -34,7 +34,7 @@ Activate for a brief quality review, v1/v2 comparison, pre-implementation gate, 
 
 ## Execution Steps
 
-1. Ingest brief(s), references, code (if supplied), implementation log, and optional Engram context.
+1. Ingest brief(s) (from `docs/brief/brief.md` or fallback), references, code (if supplied), implementation log (`docs/brief/IMPLEMENTATION_LOG.md` or fallback), and optional Engram context.
 2. Audit structural completeness against all applicable sections and minimum requirements.
 3. Check contradictions across stack/features, data/UI, decisions/roadmap, names, language policy, and version deltas.
 4. Assess technical accuracy, architectural justification, data contracts, edge cases, error taxonomy, and API currency.
@@ -45,7 +45,7 @@ Activate for a brief quality review, v1/v2 comparison, pre-implementation gate, 
 
 ## Output Contract
 
-Return: overall assessment; completeness `X/15`; strengths; Critical/High/Improvement findings with location, problem, and fix; contradictions table; assumptions table; implementability gaps; scope analysis; cross-version/drift tables when applicable; five scores and overall score; handoff recommendation.
+Return: overall assessment; completeness `X/15`; strengths; Critical/High/Improvement findings with location, problem, and fix; contradictions table; assumptions table; implementability gaps; scope analysis; cross-version/drift tables when applicable; five scores and overall score; handoff recommendation. If written to a file, save to `docs/brief/brief-audit-report.md`.
 
 Score exactly these five dimensions from 1–10: Structural Completeness, Internal Consistency, Technical Accuracy, Scope Governance, and Decision Justification. Use these anchors: `10` = all applicable contracts are substantive and consistent; `7–9` = minor, non-blocking gaps; `4–6` = material omissions or contradictions; `1–3` = implementation-blocking failures. Apply the existing Technical Accuracy cap when three critical implementability gaps exist, and state the evidence behind every score.
 

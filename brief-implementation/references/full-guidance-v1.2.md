@@ -1,12 +1,12 @@
-> **Historical reference — not a runtime contract.** The sibling SKILL.md v1.4 is authoritative. Use this file only for background, examples, or migration review.
+> **Historical reference — not a runtime contract.** The sibling SKILL.md v1.5 is authoritative. Use this file only for background, examples, or migration review.
 
 ---
 name: brief-implementation
-description: "Trigger: implement or resume a project from an existing brief, phase by phase. Guard against silent scope drift and record deviations in IMPLEMENTATION_LOG.md. Heurística integrada: sugiere SDD (gentle-ai) para cambios sustanciales; si se acepta, usa el flujo SDD completo y desactiva el flujo brief clásico."
+description: "Trigger: implement or resume a project from an existing brief, phase by phase. Guard against silent scope drift and record deviations in docs/brief/IMPLEMENTATION_LOG.md. Heurística integrada: sugiere SDD (gentle-ai) para cambios sustanciales; si se acepta, usa el flujo SDD completo y desactiva el flujo brief clásico."
 license: Apache-2.0
 metadata:
   author: Laumar
-  version: "1.4"
+  version: "1.5"
 ---
 
 ## Required references
@@ -17,7 +17,7 @@ Before Step 1, read `../brief-shared/sections-reference.md` relative to this ski
 
 Turn a finished design brief into code without letting the implementation quietly drift away from what the brief actually specifies. This skill does not write brand-new architecture decisions on the fly — it builds exactly what the brief says, phase by phase, and treats any deviation as an event that must be surfaced and recorded, never silently absorbed.
 
-**Nuevo**: Antes de ejecutar el flujo brief clásico, la skill evalúa una heurística de "cambio sustancial". Si la puntuación ≥ 4, presenta una **pregunta interactiva** al usuario proponiendo SDD (gentle-ai). Si el usuario acepta, se ejecuta el flujo SDD completo y **se desactivan** el IMPLEMENTATION_LOG.md, decision gates y scope guardrails del flujo brief clásico para esa ejecución.
+**Nuevo**: Antes de ejecutar el flujo brief clásico, la skill evalúa una heurística de "cambio sustancial". Si la puntuación ≥ 4, presenta una **pregunta interactiva** al usuario proponiendo SDD (gentle-ai). Si el usuario acepta, se ejecuta el flujo SDD completo y **se desactivan** el `docs/brief/IMPLEMENTATION_LOG.md` (o legacy `./IMPLEMENTATION_LOG.md`), decision gates y scope guardrails del flujo brief clásico para esa ejecución.
 
 ## Core Philosophy
 
@@ -30,7 +30,7 @@ This skill's job is to make that failure mode structurally hard: every deviation
 ## When to Activate
 
 - User wants to start coding from an existing brief ("empecemos a implementar", "vamos al paso 1", "quiero codear esto ahora")
-- User is resuming implementation of a project that already has a brief and possibly an `IMPLEMENTATION_LOG.md`
+- User is resuming implementation of a project that already has a brief and possibly an `IMPLEMENTATION_LOG.md` (check `docs/brief/IMPLEMENTATION_LOG.md` or legacy `./IMPLEMENTATION_LOG.md`)
 - User wants to check how implementation progress compares to the brief
 - User wants to log or resolve a deviation from the brief mid-session
 
@@ -66,7 +66,7 @@ Antes del Pre-Flight clásico, la skill inspecciona el brief y roadmap actual y 
 Before writing a single line, confirm with the user:
 
 1. **Which brief version** is being implemented (if multiple versions exist, confirm the latest is intended).
-2. **Which phase/step of the roadmap** this session starts at. Check for an existing `IMPLEMENTATION_LOG.md` first (Step 3) — if one exists, read it and confirm the starting point matches its last recorded state instead of asking from scratch.
+2. **Which phase/step of the roadmap** this session starts at. Check for an existing `docs/brief/IMPLEMENTATION_LOG.md` first (with fallback to legacy `./IMPLEMENTATION_LOG.md`, Step 3) — if one exists, read it and confirm the starting point matches its last recorded state instead of asking from scratch.
 3. **Environment state**: does the repo/project already exist, or does it need to be scaffolded from zero? If scaffolding, confirm the project structure (brief §11) will be created as specified before any feature code is written.
 4. **Code Detail Level** (per `brief-writer`): if the brief specifies "contracts only" for learning purposes, confirm the user still wants that for this session — sometimes people ask for the full solution mid-project after starting with the exercise mode. If they want to switch, note it in the log (Step 3), don't switch silently.
 
@@ -74,7 +74,7 @@ Do not skip this step even when resuming a familiar project — briefs get updat
 
 ### Quick Path — Small, isolated changes
 
-Use this path only when the change is limited to an existing behavior, requires no new dependency, public contract, entity field, route, screen, or file outside the current structure, and can be covered by an existing acceptance criterion. Read the relevant brief subsection, make the change, run the targeted check, and record it in `IMPLEMENTATION_LOG.md`. If any boundary changes, return to the full Pre-Flight and Scope Guardrail flow.
+Use this path only when the change is limited to an existing behavior, requires no new dependency, public contract, entity field, route, screen, or file outside the current structure, and can be covered by an existing acceptance criterion. Read the relevant brief subsection, make the change, run the targeted check, and record it in `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`). If any boundary changes, return to the full Pre-Flight and Scope Guardrail flow.
 
 ### Step 2 — Scope Guardrail (active for the entire implementation session — SOLO FLUJO BRIEF CLÁSICO)
 
@@ -90,11 +90,11 @@ This applies symmetrically in both directions:
 
 **Exception — bugs strictly within a phase's own acceptance criteria:** fixing something that doesn't yet meet the brief's own stated acceptance criteria for the current phase (brief §13) is not a deviation, it's just finishing the phase correctly. No need to stop and ask for those.
 
-Log every deviation and its resolution in `IMPLEMENTATION_LOG.md` (Step 3) regardless of which way it was resolved — even ones the user waves through with "sí, dale, no hace falta actualizar el brief" should be recorded, because that's exactly the kind of thing an audit needs to find later.
+Log every deviation and its resolution in `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`, Step 3) regardless of which way it was resolved — even ones the user waves through with "sí, dale, no hace falta actualizar el brief" should be recorded, because that's exactly the kind of thing an audit needs to find later.
 
-### Step 3 — `IMPLEMENTATION_LOG.md` (SOLO FLUJO BRIEF CLÁSICO)
+### Step 3 — `docs/brief/IMPLEMENTATION_LOG.md` (SOLO FLUJO BRIEF CLÁSICO)
 
-Maintain this file throughout the implementation, updating it at least at the start and end of every phase, and immediately whenever a deviation from Step 2 is resolved. Create it at the very first session if it doesn't exist yet.
+Maintain this file throughout the implementation (saved in `docs/brief/IMPLEMENTATION_LOG.md`, respecting legacy `./IMPLEMENTATION_LOG.md` if an existing project already uses it), updating it at least at the start and end of every phase, and immediately whenever a deviation from Step 2 is resolved. Create it at the very first session if it doesn't exist yet.
 
 ```markdown
 # Implementation Log — [Project Name]
@@ -129,7 +129,7 @@ Within a phase:
 1. Re-read the phase's description in the brief roadmap (§12) plus its relevant sections (Data Model, Layout, Interactions) — don't work from memory of the brief if the session has been long; re-fetch the specific subsections being implemented.
 2. Implement following the brief's contracts/code exactly as specified (respecting Code Detail Level — if contracts-only, write the signatures the brief specifies and let the user drive the logic, prompting them rather than filling it in yourself unless asked).
 3. Apply the Scope Guardrail (Step 2) continuously, not just at phase boundaries.
-4. Update `IMPLEMENTATION_LOG.md` phase status to 🔶 In progress at start.
+4. Update `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`) phase status to 🔶 In progress at start.
 
 ### Step 5 — Phase Close: Mini-Audit (SOLO FLUJO BRIEF CLÁSICO)
 
@@ -137,7 +137,7 @@ Before moving to the next phase, check the current phase's own deliverable again
 
 - Walk every item in the phase's "Done when" checklist literally — each one should be checkable without re-interpreting what the brief author meant. If a checklist item turns out to be ambiguous in practice, that's itself a brief gap — flag it rather than deciding on your own how to interpret it.
 - Were any deviations from Step 2 left unresolved (marked ad-hoc but not yet decided whether to patch the brief)?
-- Update `IMPLEMENTATION_LOG.md`: mark the phase ✅ Done with completion date only when every checklist item passes, or flag specific failing items keeping it 🔶 In progress.
+- Update `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`): mark the phase ✅ Done with completion date only when every checklist item passes, or flag specific failing items keeping it 🔶 In progress.
 
 Do not silently start the next phase if the current one's acceptance criteria aren't met — tell the user what's failing and ask whether to fix it now or proceed with it as a known gap (logged as such).
 
@@ -145,7 +145,7 @@ Do not silently start the next phase if the current one's acceptance criteria ar
 
 When all roadmap phases are marked ✅ Done:
 
-1. Do a final pass over `IMPLEMENTATION_LOG.md` — resolve any deviation still marked "Brief updated? No" by asking the user whether to patch the brief now, before calling the project finished. An unresolved "No" at project completion means the brief no longer matches reality and nobody decided that was okay.
+1. Do a final pass over `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`) — resolve any deviation still marked "Brief updated? No" by asking the user whether to patch the brief now, before calling the project finished. An unresolved "No" at project completion means the brief no longer matches reality and nobody decided that was okay.
 2. Suggest running `brief-audit` in **post-implementation mode** (see that skill's Step 9) — comparing the finished brief against the finished code, using this log as a cross-check — as the natural closing step of the whole discovery → writer → implementation → audit cycle.
 
 ## Flujo SDD Integrado (cuando usuario acepta la sugerencia) — NUEVO en v1.4
@@ -189,13 +189,13 @@ Throughout implementation, **if the Engram MCP tool is available in this session
   - topic_key: `brief/[project-name]/implementation`
   - content: What was completed, any deviations logged, current overall status
 
-**If Engram is not available**, rely solely on `IMPLEMENTATION_LOG.md` as the persistence mechanism and say so if the user asks about cross-session memory: "El progreso está en `IMPLEMENTATION_LOG.md` en el repo — Engram no está conectado en esta sesión, así que no hay respaldo adicional en memoria."
+**If Engram is not available**, rely solely on `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`) as the persistence mechanism and say so if the user asks about cross-session memory: "El progreso está en `docs/brief/IMPLEMENTATION_LOG.md` en el repo — Engram no está conectado en esta sesión, así que no hay respaldo adicional en memoria."
 
 ## Handoff
 
 ### Flujo Brief Clásico
 
-- **Mid-project, resuming later**: "El progreso está en `IMPLEMENTATION_LOG.md`. La próxima sesión puede arrancar leyendo ese archivo sin perder contexto."
+- **Mid-project, resuming later**: "El progreso está en `docs/brief/IMPLEMENTATION_LOG.md`. La próxima sesión puede arrancar leyendo ese archivo sin perder contexto."
 - **Deviation found that needs a brief update**: hand off to `brief-writer` (evolution mode) to patch the brief before continuing to code against it.
 - **Project complete**: hand off to `brief-audit` (post-implementation mode) for the final brief-vs-code check.
 - **Brief turns out too weak to implement against** (discovered mid-session, not just at Pre-Flight): stop, explain what's missing or contradictory, and hand off to `brief-audit` or `brief-writer` rather than continuing to guess.
@@ -204,6 +204,6 @@ Throughout implementation, **if the Engram MCP tool is available in this session
 
 - **Mid-SDD, resuming later**: `/sdd-continue <change>` — el orquestador recupera apply-progress y continua.
 - **SDD completo**: hand off a `brief-audit` (post-implementation mode) usando verify-report y archive-report como evidencia, o a `sdd-archive` si no se cerró.
-- **Usuario quiere volver a flujo brief**: se puede reanudar el flujo brief clásico leyendo el brief actualizado (si SDD patcheó el brief via brief-writer) y el IMPLEMENTATION_LOG.md (si existe de antes).
+- **Usuario quiere volver a flujo brief**: se puede reanudar el flujo brief clásico leyendo el brief actualizado (si SDD patcheó el brief via brief-writer) y el `docs/brief/IMPLEMENTATION_LOG.md` (o legacy `./IMPLEMENTATION_LOG.md` si existe de antes).
 
 (End of file - total ~280 lines)

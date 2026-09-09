@@ -1,4 +1,4 @@
-> **Historical reference — not a runtime contract.** The sibling SKILL.md v1.3 is authoritative. Use this file only for background, examples, or migration review.
+> **Historical reference — not a runtime contract.** The sibling SKILL.md v1.5 is authoritative. Use this file only for background, examples, or migration review.
 
 ---
 name: brief-writer
@@ -29,14 +29,14 @@ A design brief is a CONTRACT, not a wishlist. Every section must earn its place.
 - User has completed a `brief-discovery` session and wants the full document
 - User wants to evolve an existing brief to a new version
 - User has enough project context (from conversation, existing docs, or Engram) to produce a brief
-- User provides or references a `discovery-notes.md` artifact
+- User provides or references a `docs/brief/discovery-notes.md` artifact (or legacy `./discovery-notes.md`)
 
 ## Operating Modes
 
 ### Mode 1 — New Brief (from discovery notes or conversation)
 
-Generate a complete v1 design brief. Requires either:
-- A `discovery-notes.md` artifact from the `brief-discovery` skill
+Generate a complete v1 design brief saved to `docs/brief/brief.md`. Requires either:
+- A `docs/brief/discovery-notes.md` artifact (or legacy `./discovery-notes.md`) from the `brief-discovery` skill
 - Sufficient context from the current conversation
 - Existing project context from Engram
 

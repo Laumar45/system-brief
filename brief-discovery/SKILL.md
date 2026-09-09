@@ -4,14 +4,21 @@ description: "Trigger: new project idea, requirements clarification, or pre-codi
 license: Apache-2.0
 metadata:
   author: Laumar
-  version: "1.4"
+  version: "1.6"
 ---
 
 # Brief Discovery
 
 ## Activation Contract
 
-Activate for a new project, unclear requirements, or a request to plan before coding. Do not write the final brief; produce `discovery-notes.md`. Every interview phase uses the `question` tool (lossless blocking prompt) with predefined options plus an open free-text alternative; no phase falls back to plain-text-only questioning.
+**Default entry point for any vague brief intent.** Activate for:
+
+- Any vague brief intent without structured details: `quiero empezar un brief` / `empezar un brief` / `crear un brief` / `hacer un brief` / `nuevo brief` / `quiero hacer un brief desde cero` / `quiero empezar a hacer un brief` or semantic equivalents — when the user has NOT provided structured context.
+- `quiero planificar antes de codificar` or any request to plan before coding.
+- A new project or unclear requirements.
+- Any request where the user has NOT provided discovery notes (`docs/brief/discovery-notes.md` or legacy `./discovery-notes.md`) AND has NOT evidenced >=4 of the six pillars (Vision, Constraints, Stack, Data, Surface, Goal) with concrete values.
+
+`brief-discovery` is the DEFAULT for vague intent. `brief-writer` MUST NEVER activate directly in these cases — always route to discovery first. Do not write the final brief; produce `docs/brief/discovery-notes.md`. Every interview phase uses the `question` tool (lossless blocking prompt) with predefined options plus an open free-text alternative; no phase falls back to plain-text-only questioning.
 
 ## Hard Rules
 
@@ -41,12 +48,12 @@ Activate for a new project, unclear requirements, or a request to plan before co
 2. **Interview adaptively with question tool:** cover Vision, Constraints & Promises, Stack & Architecture, Data Model & Persistence, Screens & Interactions, then Open Questions — in that order, but compress or skip phases whose answers are already evidenced. Each phase is one `question` call; wait for the answer before the next phase so later probes adapt to earlier choices. Every question includes a free-text alternative.
 3. **Challenge gaps rigorously:** within or immediately after the relevant phase, probe negative scope, error/empty states, data entry/exit, scale, platform, and developer goal; surface stack-vs-constraint and feature-vs-constraint contradictions explicitly and record the user's resolution.
 4. **Classify uncertainty:** put genuinely undecided matters in Open Questions; put concrete values the writer must choose (and might otherwise invent unmarked) in Needs Assumption.
-5. **Write and review `discovery-notes.md`:** include Vision, Constraints, Stack with exclusions, Data Model/Data Flow, Screens/Interactions, Decisions Made, Open Questions, Needs Assumption, and Out of Scope.
+5. **Write and review `docs/brief/discovery-notes.md`:** include Vision, Constraints, Stack with exclusions, Data Model/Data Flow, Screens/Interactions, Decisions Made, Open Questions, Needs Assumption, and Out of Scope.
 6. **Handoff:** tell the user to review the notes before invoking `brief-writer`. Do not generate the design brief in this skill.
 
 ## Output Contract
 
-Return the artifact path, status (`complete` or `partial`), unresolved questions, assumptions needing confirmation, and the handoff to `brief-writer`.
+Return the artifact path (`docs/brief/discovery-notes.md`), status (`complete` or `partial`), unresolved questions, assumptions needing confirmation, and the handoff to `brief-writer`.
 
 ## References
 

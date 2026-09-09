@@ -1,4 +1,4 @@
-> **Historical reference — not a runtime contract.** The sibling SKILL.md v1.4 is authoritative. Use this file only for background, examples, or migration review.
+> **Historical reference — not a runtime contract.** The sibling SKILL.md v1.6 is authoritative. Use this file only for background, examples, or migration review.
 
 ---
 name: brief-discovery
@@ -15,7 +15,7 @@ Before Phase 1, read `../brief-shared/sections-reference.md` relative to this sk
 
 # Brief Discovery — Structured Technical Interview
 
-Extract everything needed to produce a high-quality design brief through an adaptive, constraints-first conversation. The output is a `discovery-notes.md` artifact that feeds directly into the `brief-writer` skill. Every phase is conducted through the `question` tool — never plain-text-only questions — with predefined options plus an explicit free-text alternative.
+Extract everything needed to produce a high-quality design brief through an adaptive, constraints-first conversation. The output is a `docs/brief/discovery-notes.md` artifact (with legacy fallback to `./discovery-notes.md`) that feeds directly into the `brief-writer` skill. Every phase is conducted through the `question` tool — never plain-text-only questions — with predefined options plus an explicit free-text alternative.
 
 ## Core Philosophy
 
@@ -188,7 +188,7 @@ Push back (respectfully but firmly) when you detect:
 | Vague entity definition | "Be concrete: what fields does one entry have? Name that exact list." |
 | No empty/error state considered | "What does the user see when the list is empty / search finds nothing / save fails?" |
 
-## Output Format — `discovery-notes.md`
+## Output Format — `docs/brief/discovery-notes.md`
 
 When the interview is complete (or when the user says "enough, let's write the brief"), produce a structured artifact:
 
@@ -264,7 +264,7 @@ After producing the discovery notes, **if the Engram MCP tool is available in th
 
 ## Handoff to brief-writer
 
-After producing `discovery-notes.md`, inform the user:
+After producing `docs/brief/discovery-notes.md`, inform the user:
 
 > "Discovery complete. You can now use the `brief-writer` skill to generate the full design brief from these notes. The notes are saved as an artifact[, and in persistent memory, if Engram was available]."
 
