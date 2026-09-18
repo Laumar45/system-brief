@@ -16,7 +16,7 @@ metadata:
 - Any vague brief intent without structured details: `quiero empezar un brief` / `empezar un brief` / `crear un brief` / `hacer un brief` / `nuevo brief` / `quiero hacer un brief desde cero` / `quiero empezar a hacer un brief` or semantic equivalents — when the user has NOT provided structured context.
 - `quiero planificar antes de codificar` or any request to plan before coding.
 - A new project or unclear requirements.
-- Any request where the user has NOT provided discovery notes (`docs/brief/discovery-notes.md` or legacy `./discovery-notes.md`) AND has NOT evidenced >=4 of the six pillars (Vision, Constraints, Stack, Data, Surface, Goal) with concrete values.
+- Any request where the user has NOT provided discovery notes (`docs/brief/discovery-notes.md`) AND has NOT evidenced >=4 of the six pillars (Vision, Constraints, Stack, Data, Surface, Goal) with concrete values.
 
 `brief-discovery` is the DEFAULT for vague intent. `brief-writer` MUST NEVER activate directly in these cases — always route to discovery first. Do not write the final brief; produce `docs/brief/discovery-notes.md`. Every interview phase uses the `question` tool (lossless blocking prompt) with predefined options plus an open free-text alternative; no phase falls back to plain-text-only questioning.
 

@@ -28,7 +28,7 @@ This skill's job is to make that failure mode structurally hard: every deviation
 ## When to Activate
 
 - User wants to start coding from an existing brief ("empecemos a implementar", "vamos al paso 1", "quiero codear esto ahora")
-- User is resuming implementation of a project that already has a brief and possibly an `IMPLEMENTATION_LOG.md` (check `docs/brief/IMPLEMENTATION_LOG.md` or legacy `./IMPLEMENTATION_LOG.md`)
+- User is resuming implementation of a project that already has a brief and possibly an `IMPLEMENTATION_LOG.md` (check)
 - User wants to check how implementation progress compares to the brief
 - User wants to log or resolve a deviation from the brief mid-session
 
@@ -48,7 +48,7 @@ Do not attempt to "fill in the gaps" of a bad brief yourself while coding — th
 Before writing a single line, confirm with the user:
 
 1. **Which brief version** is being implemented (if multiple versions exist, confirm the latest is intended).
-2. **Which phase/step of the roadmap** this session starts at. Check for an existing `docs/brief/IMPLEMENTATION_LOG.md` first (with fallback to legacy `./IMPLEMENTATION_LOG.md`, Step 3) — if one exists, read it and confirm the starting point matches its last recorded state instead of asking from scratch.
+2. **Which phase/step of the roadmap** this session starts at. Check for an existing `docs/brief/IMPLEMENTATION_LOG.md` first — if one exists, read it and confirm the starting point matches its last recorded state instead of asking from scratch.
 3. **Environment state**: does the repo/project already exist, or does it need to be scaffolded from zero? If scaffolding, confirm the project structure (brief §11) will be created as specified before any feature code is written.
 4. **Code Detail Level** (per `brief-writer`): if the brief specifies "contracts only" for learning purposes, confirm the user still wants that for this session — sometimes people ask for the full solution mid-project after starting with the exercise mode. If they want to switch, note it in the log (Step 3), don't switch silently.
 
@@ -56,7 +56,7 @@ Do not skip this step even when resuming a familiar project — briefs get updat
 
 ### Quick Path — Small, isolated changes
 
-Use this path only when the change is limited to an existing behavior, requires no new dependency, public contract, entity field, route, screen, or file outside the current structure, and can be covered by an existing acceptance criterion. Read the relevant brief subsection, make the change, run the targeted check, and record it in `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`). If any boundary changes, return to the full Pre-Flight and Scope Guardrail flow.
+Use this path only when the change is limited to an existing behavior, requires no new dependency, public contract, entity field, route, screen, or file outside the current structure, and can be covered by an existing acceptance criterion. Read the relevant brief subsection, make the change, run the targeted check, and record it in `docs/brief/IMPLEMENTATION_LOG.md`. If any boundary changes, return to the full Pre-Flight and Scope Guardrail flow.
 
 ### Step 2 — Scope Guardrail (active for the entire implementation session)
 
@@ -72,11 +72,11 @@ This applies symmetrically in both directions:
 
 **Exception — bugs strictly within a phase's own acceptance criteria:** fixing something that doesn't yet meet the brief's own stated acceptance criteria for the current phase (brief §13) is not a deviation, it's just finishing the phase correctly. No need to stop and ask for those.
 
-Log every deviation and its resolution in `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`, Step 3) regardless of which way it was resolved — even ones the user waves through with "sí, dale, no hace falta actualizar el brief" should be recorded, because that's exactly the kind of thing an audit needs to find later.
+Log every deviation and its resolution in `docs/brief/IMPLEMENTATION_LOG.md` regardless of which way it was resolved — even ones the user waves through with "sí, dale, no hace falta actualizar el brief" should be recorded, because that's exactly the kind of thing an audit needs to find later.
 
 ### Step 3 — `docs/brief/IMPLEMENTATION_LOG.md`
 
-Maintain this file throughout the implementation (saved in `docs/brief/IMPLEMENTATION_LOG.md`, respecting legacy `./IMPLEMENTATION_LOG.md` if an existing project already uses it), updating it at least at the start and end of every phase, and immediately whenever a deviation from Step 2 is resolved. Create it at the very first session if it doesn't exist yet.
+Maintain this file throughout the implementation (saved in `docs/brief/IMPLEMENTATION_LOG.md`, if an existing project already uses it), updating it at least at the start and end of every phase, and immediately whenever a deviation from Step 2 is resolved. Create it at the very first session if it doesn't exist yet.
 
 ```markdown
 # Implementation Log — [Project Name]
@@ -111,7 +111,7 @@ Within a phase:
 1. Re-read the phase's description in the brief roadmap (§12) plus its relevant sections (Data Model, Layout, Interactions) — don't work from memory of the brief if the session has been long; re-fetch the specific subsections being implemented.
 2. Implement following the brief's contracts/code exactly as specified (respecting Code Detail Level — if contracts-only, write the signatures the brief specifies and let the user drive the logic, prompting them rather than filling it in yourself unless asked).
 3. Apply the Scope Guardrail (Step 2) continuously, not just at phase boundaries.
-4. Update `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`) phase status to 🔶 In progress at start.
+4. Update `docs/brief/IMPLEMENTATION_LOG.md` phase status to 🔶 In progress at start.
 
 ### Step 5 — Phase Close: Mini-Audit
 
@@ -119,7 +119,7 @@ Before moving to the next phase, check the current phase's own deliverable again
 
 - Walk every item in the phase's "Done when" checklist literally — each one should be checkable without re-interpreting what the brief author meant. If a checklist item turns out to be ambiguous in practice, that's itself a brief gap — flag it rather than deciding on your own how to interpret it.
 - Were any deviations from Step 2 left unresolved (marked ad-hoc but not yet decided whether to patch the brief)?
-- Update `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`): mark the phase ✅ Done with completion date only when every checklist item passes, or flag specific failing items keeping it 🔶 In progress.
+- Update `docs/brief/IMPLEMENTATION_LOG.md`: mark the phase ✅ Done with completion date only when every checklist item passes, or flag specific failing items keeping it 🔶 In progress.
 
 Do not silently start the next phase if the current one's acceptance criteria aren't met — tell the user what's failing and ask whether to fix it now or proceed with it as a known gap (logged as such).
 
@@ -127,7 +127,7 @@ Do not silently start the next phase if the current one's acceptance criteria ar
 
 When all roadmap phases are marked ✅ Done:
 
-1. Do a final pass over `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`) — resolve any deviation still marked "Brief updated? No" by asking the user whether to patch the brief now, before calling the project finished. An unresolved "No" at project completion means the brief no longer matches reality and nobody decided that was okay.
+1. Do a final pass over `docs/brief/IMPLEMENTATION_LOG.md` — resolve any deviation still marked "Brief updated? No" by asking the user whether to patch the brief now, before calling the project finished. An unresolved "No" at project completion means the brief no longer matches reality and nobody decided that was okay.
 2. Suggest running `brief-audit` in **post-implementation mode** (see that skill's Step 9) — comparing the finished brief against the finished code, using this log as a cross-check — as the natural closing step of the whole discovery → writer → implementation → audit cycle.
 
 ## Engram Integration
@@ -140,7 +140,7 @@ Throughout implementation, **if the Engram MCP tool is available in this session
   - topic_key: `brief/[project-name]/implementation`
   - content: What was completed, any deviations logged, current overall status
 
-**If Engram is not available**, rely solely on `docs/brief/IMPLEMENTATION_LOG.md` (or legacy `./IMPLEMENTATION_LOG.md`) as the persistence mechanism and say so if the user asks about cross-session memory: "El progreso está en `docs/brief/IMPLEMENTATION_LOG.md` en el repo — Engram no está conectado en esta sesión, así que no hay respaldo adicional en memoria."
+**If Engram is not available**, rely solely on `docs/brief/IMPLEMENTATION_LOG.md` as the persistence mechanism and say so if the user asks about cross-session memory: "El progreso está en `docs/brief/IMPLEMENTATION_LOG.md` en el repo — Engram no está conectado en esta sesión, así que no hay respaldo adicional en memoria."
 
 ## Handoff
 

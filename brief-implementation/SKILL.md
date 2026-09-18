@@ -19,7 +19,7 @@ Activate when coding from an existing brief, resuming a phase, checking progress
 - Before writing, confirm brief version (inspect `docs/brief/brief.md`, fallback to `docs/brief.md`, `brief.md`, `BRIEF.md`), roadmap phase, environment/scaffolding state, and Code Detail Level.
 - Enforce the brief's Agent Constraints, naming policy, stack, project structure, and error taxonomy.
 - If a change affects behavior, scope, public contracts, dependencies, entities, routes, screens, or files outside §11, stop and ask whether to patch the brief or document an ad-hoc decision.
-- Do not silently mark a deviation resolved. Record every deviation and its resolution in `docs/brief/IMPLEMENTATION_LOG.md` (check `docs/brief/` first, fallback to legacy `./IMPLEMENTATION_LOG.md` if existing).
+- Do not silently mark a deviation resolved. Record every deviation and its resolution in `docs/brief/IMPLEMENTATION_LOG.md` (check `docs/brief/` first, if existing).
 - Do not close a phase until every Done-when and acceptance criterion passes.
 
 ## Decision Gates
@@ -27,18 +27,19 @@ Activate when coding from an existing brief, resuming a phase, checking progress
 | Change shape | Route |
 |---|---|
 | No brief or thin/contradictory brief | Hand back to `brief-discovery`, `brief-writer`, or `brief-audit`. |
-| Small isolated fix; no new dependency/contract/field/route/screen/file **other than `docs/brief/IMPLEMENTATION_LOG.md`** (or legacy); existing acceptance criterion covers it | Quick Path: targeted read, change, check, and log. |
+| Small isolated fix; no new dependency/contract/field/route/screen/file **other than `docs/brief/IMPLEMENTATION_LOG.md`**; existing acceptance criterion covers it | Quick Path: targeted read, change, check, and log. |
 | Requirement is missing or impractical | Stop; ask for brief evolution or an explicitly logged workaround. |
 | Current phase incomplete | Keep it In Progress; do not silently start the next phase. |
 | All phases complete | Resolve open deviations, then hand off to post-implementation `brief-audit`. |
 
 ## Execution Steps
 
-1. **Pre-flight**: Lee brief (`docs/brief/brief.md` o fallback), roadmap, y crea/actualiza `docs/brief/IMPLEMENTATION_LOG.md` (o fallback legacy si ya existe) con versión, Code Detail Level, phase status y session notes.
-2. Ejecuta solo la fase actual del roadmap. Re-lee deliverables, contracts y Done-when checklist.
-3. Aplica Scope Guardrail continuamente. Pregunta antes de cualquier decisión out-of-brief.
-4. Al cerrar fase, verifica cada Done-when y acceptance criterion, registra desviaciones y marca Done solo cuando todos pasan.
-5. Al completar proyecto, resuelve cada desviación `Brief updated: No` y recomienda auditoría final `brief-audit`.
+1. **Pre-flight**: Read the brief (`docs/brief/brief.md` or fallback), the roadmap, and create/update `docs/brief/IMPLEMENTATION_LOG.md` with the version, Code Detail Level, phase status, and session notes.
+2. Execute only the current phase of the roadmap. Review the deliverables, contracts, and the “Done-when” checklist.
+3. Continuously apply Scope Guardrail. Ask for approval before making any decisions that go beyond the scope of the brief.
+4. When closing a phase, verify each “Done-when” and acceptance criterion, log any deviations, and mark it as “Done” only when all criteria are met.
+5. Upon completing the project, resolve any deviations marked as `Brief updated: No` and recommend a final audit `brief-audit`.
+
 
 ## Output Contract
 

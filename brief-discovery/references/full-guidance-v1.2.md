@@ -15,7 +15,7 @@ Before Phase 1, read `../brief-shared/sections-reference.md` relative to this sk
 
 # Brief Discovery — Structured Technical Interview
 
-Extract everything needed to produce a high-quality design brief through an adaptive, constraints-first conversation. The output is a `docs/brief/discovery-notes.md` artifact (with legacy fallback to `./discovery-notes.md`) that feeds directly into the `brief-writer` skill. Every phase is conducted through the `question` tool — never plain-text-only questions — with predefined options plus an explicit free-text alternative.
+Extract everything needed to produce a high-quality design brief through an adaptive, constraints-first conversation. The output is a `docs/brief/discovery-notes.md` artifact that feeds directly into the `brief-writer` skill. Every phase is conducted through the `question` tool — never plain-text-only questions — with predefined options plus an explicit free-text alternative.
 
 ## Core Philosophy
 
